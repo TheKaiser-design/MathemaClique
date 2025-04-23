@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,15 +13,17 @@ public class NumButton : MonoBehaviour
     [SerializeField] private Color _rightColor;
 
     private NumButtonsTween _tween;
-    private RectTransform _rectTransform;
-    private Color _baseColor;
+
+    public string Value
+    {
+        get { return GetComponentInChildren<TextMeshPro>().text; }
+        set { GetComponentInChildren<TextMeshPro>().text = value; }
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        _rectTransform = GetComponent<RectTransform>();
-        _baseColor = _rectTransform.GetComponent<Image>().color;
-        _tween = gameObject.GetComponent<NumButtonsTween>();
+        _tween = GetComponent<NumButtonsTween>();
     }
 
     public void ButtonClicked()
@@ -38,8 +41,18 @@ public class NumButton : MonoBehaviour
         _tween.OnWrongTween(_wrongColor);
     }
 
+    public void DeactivateButton()
+    {
+        _tween.OnTweenDeactivate(_deactivatedColor);
+    }
+
     public void ResetButton()
     {
-        _tween.OnResetTween(_baseColor);
+        _tween.OnResetTween();
+    }
+
+    public void SetButtonActive(bool active)
+    {
+        GetComponent<Button>().interactable = active;
     }
 }

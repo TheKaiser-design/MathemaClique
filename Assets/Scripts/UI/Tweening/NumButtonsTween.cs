@@ -65,12 +65,19 @@ public class NumButtonsTween : MonoBehaviour
         LeanTween.color(_rectTransform, color, 0f);
         LeanTween.scale(_rectTransform, _rectTransform.localScale * _onRightMaxScaleFactor, _onRightAnimDuration).setEase(LeanTweenType.easeInSine);
         LeanTween.rotateAroundLocal(_rectTransform, _rectTransform.forward, 1080f, _onRightAnimDuration).setEase(LeanTweenType.easeInSine);
-        LeanTween.scale(_rectTransform, Vector3.one * 0.01f, 0.3f).setEase(LeanTweenType.easeOutExpo).setDelay(_onRightAnimDuration).setOnComplete(() => gameObject.SetActive(false));
+        LeanTween.scale(_rectTransform, Vector3.one * 0.01f, 0.3f).setEase(LeanTweenType.easeOutExpo).setDelay(_onRightAnimDuration).setOnComplete(() => GetComponentInChildren<Button>().interactable = false);
     }
 
-    public void OnResetTween(Color color)
+    public void OnTweenDeactivate(Color color)
     {
         LeanTween.color(_rectTransform, color, 0f);
-        LeanTween.scale(_rectTransform, _rectTransform.localScale, 0f);
+        GetComponentInChildren<Button>().interactable = false;
+    }
+
+    public void OnResetTween()
+    {
+        LeanTween.color(_rectTransform, _baseColor, 0f);
+        LeanTween.scale(_rectTransform, _baseScale, 0f);
+        GetComponentInChildren<Button>().interactable = true;
     }
 }
