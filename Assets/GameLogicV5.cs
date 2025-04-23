@@ -19,6 +19,7 @@ public class GameLogicV5 : MonoBehaviour
     public GameObject mainGame;
     public GameObject winUI;
     public GameObject equationText;
+    public GameObject flashFX;
 
     // The button that are layed out in the middle of the screen
     public List<Button> buttonsLayout;
@@ -73,8 +74,10 @@ public class GameLogicV5 : MonoBehaviour
         Shuffle(values);
         for (int i = 0; i < values.Count; i++)
         {
+            Debug.Log("Value at " + i + ": " + values[i]);
             buttonsLayout[i].GetComponentInChildren<TextMeshProUGUI>().text = values[i];
             buttonsLayout[i].GetComponentInChildren<TextMeshProUGUI>().color = Color.black;
+
         }
 
         // Generate the text where the solutions on the left side should appear
@@ -229,6 +232,8 @@ public class GameLogicV5 : MonoBehaviour
         }
         if (solutionFound == true)
         {
+            var flash = Instantiate(flashFX, new Vector2 (2.1f, 3f), Quaternion.identity);
+            flash.transform.localScale = new Vector3 (0.2f, 0.2f, 1f);
             Invoke("ShowRIGHT", 1f);
         }
     }
@@ -237,13 +242,14 @@ public class GameLogicV5 : MonoBehaviour
     {
         equationText.GetComponent<TextMeshProUGUI>().color = Color.green;
         equationText.GetComponent<TextMeshProUGUI>().text = "RIGHT";
+
         Invoke("ClearRightEquation", 1f);
     }
 
     void ShowWRONG()
     {
         equationText.GetComponent<TextMeshProUGUI>().color = Color.red;
-        equationText.GetComponent<TextMeshProUGUI>().text = "WRONG";
+        equationText.GetComponent<TextMeshProUGUI>().text = "WRONG TRY AGAIN^.^ ";
         Invoke("ClearEquation", 1f);
     }
 
@@ -272,7 +278,6 @@ public class GameLogicV5 : MonoBehaviour
         presseddButtons.Clear();
         solutionFound = false;
         EnableInput();
-
     }
 
     void EnableInput()
