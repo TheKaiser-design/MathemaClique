@@ -7,13 +7,6 @@ using UnityEngine.UI;
 
 public class ButtonBehaviour : MonoBehaviour
 {
-    public static Action<RectTransform> OnHooverEnter;
-    public static Action<RectTransform> OnHooverExit;
-    public static Action<RectTransform, Color> OnButtonClicked;
-    public static Action<RectTransform, Color> OnRightAnswer;
-    public static Action<RectTransform, Color> OnWrongAnswer;
-    public static Action<RectTransform, Color> OnResetButton;
-
     [Header("COLORS")]
     [SerializeField] private Color _clickedColor;
     [SerializeField] private Color _selectedColor;
@@ -21,38 +14,41 @@ public class ButtonBehaviour : MonoBehaviour
     [SerializeField] private Color _wrongColor;
     [SerializeField] private Color _rightColor;
 
+    private ButtonTween _tween;
     private RectTransform _rectTransform;
     private Color _baseColor;
+
     // Start is called before the first frame update
     void Start()
     {
         _rectTransform = GetComponent<RectTransform>();
         _baseColor = _rectTransform.GetComponent<Image>().color;
+        _tween = gameObject.GetComponent<ButtonTween>();
     }
 
     public void HooverEnter()
     {
-        OnHooverEnter?.Invoke(_rectTransform);
+        _tween.OnHooverTween(_rectTransform);
     }
 
     public void HooverExit()
     {
-        OnHooverExit?.Invoke(_rectTransform);
+        _tween.OnHooverLeaveTween(_rectTransform);
     }
 
     public void ButtonClicked()
     {
-        OnButtonClicked?.Invoke(_rectTransform, _clickedColor);
+        _tween.OnClickTween(_rectTransform, _clickedColor);
     }
 
     public void RightAnswer()
     {
-        OnRightAnswer?.Invoke(_rectTransform, _rightColor);
+        _tween.onRightTween(_rectTransform, _rightColor);
     }
 
     public void WrongAnswer()
     {
-        OnWrongAnswer?.Invoke(_rectTransform, _wrongColor);
+        _tween.OnWrongTween(_rectTransform, _wrongColor);
     }
 
     public void ResetButton()
