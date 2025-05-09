@@ -6,6 +6,8 @@ using UnityEngine;
 public class SolutionElement : MonoBehaviour
 {
     [SerializeField] private Color _solutionFoundColor;
+    private bool _isSolved;
+    public bool IsSolved => _isSolved;
 
     private SolutionElementTween _tween;
 
@@ -24,5 +26,6 @@ public class SolutionElement : MonoBehaviour
     public void OnSolutionFound()
     {
         _tween.OnSolutionFoundTween(_solutionFoundColor);
+        _isSolved = true;
     }
 }

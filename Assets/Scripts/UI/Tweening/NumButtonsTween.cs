@@ -58,6 +58,7 @@ public class NumButtonsTween : MonoBehaviour
         LeanTween.rotateAroundLocal(_rectTransform, _rectTransform.forward, _maxRotationAngle, _oneRotationDuration).setEase(LeanTweenType.easeInOutBounce);
         LeanTween.rotateAroundLocal(_rectTransform, _rectTransform.forward, -2 * _maxRotationAngle, _oneRotationDuration).setEase(LeanTweenType.easeInOutBounce).setDelay(_oneRotationDuration);
         LeanTween.rotateAroundLocal(_rectTransform, _rectTransform.forward, _maxRotationAngle, _oneRotationDuration).setEase(LeanTweenType.easeInOutBounce).setDelay(2 * _oneRotationDuration);
+        LeanTween.color(_rectTransform, _baseColor, 0f).setDelay(3 * _oneRotationDuration);
     }
 
     public void OnRightTween(Color color)
